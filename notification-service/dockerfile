@@ -18,8 +18,14 @@ RUN docker-php-ext-install sockets
 COPY composer.lock composer.json ./
 
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN composer install --no-scripts --no-autoloader
+#RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+#RUN composer install --no-scripts --no-autoloader
+
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+    && chown -R www-data:www-data /var/www/html \
+    && su www-data -s /bin/sh -c 'composer install --no-scripts --no-autoloader' \
+    && composer dump-autoload \
+    && chown -R root:root /var/www/html
 
 
 COPY . .
@@ -27,4 +33,4 @@ COPY . .
 #RUN composer dump-autoload
 
 EXPOSE 8000
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
+CMD ["php", "artisan", "serve", "--host=127.0.0.1", "--port=8000"]
