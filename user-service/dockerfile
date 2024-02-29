@@ -12,6 +12,9 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd pdo_mysql zip
 
+
+RUN docker-php-ext-install sockets
+
 COPY composer.lock composer.json ./
 
 
