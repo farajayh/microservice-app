@@ -32,5 +32,5 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 #RUN composer dump-autoload
 
-EXPOSE 8000
-CMD ["php", "artisan", "serve", "--host=127.0.0.1", "--port=8000"]
+EXPOSE 80
+CMD ["php", "artisan", "serve", "--host=127.0.0.1", "--port=80"]
