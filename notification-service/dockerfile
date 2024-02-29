@@ -21,14 +21,14 @@ COPY composer.lock composer.json ./
 #RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 #RUN composer install --no-scripts --no-autoloader
 
+COPY . .
+
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && chown -R www-data:www-data /var/www/html \
     && su www-data -s /bin/sh -c 'composer install --no-scripts --no-autoloader' \
     && composer dump-autoload \
     && chown -R root:root /var/www/html
 
-
-COPY . .
 
 #RUN composer dump-autoload
 
