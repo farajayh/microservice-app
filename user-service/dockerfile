@@ -31,7 +31,8 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
     && chown -R root:root /var/www/html \
     && cp /var/www/html/.env.example /var/www/html/.env \
     && touch /var/www/html/database/database.sqlite \
-    && php artisan key:generate
+    && php artisan key:generate \
+    && php artisan migrate
     
 #RUN composer dump-autoload
 
