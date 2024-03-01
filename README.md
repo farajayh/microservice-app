@@ -1,15 +1,15 @@
-## microservice-app
+# Microservice Demo
 Demo Laravel Microservice App
 
 
-# Services
+## Services
 * user-service - /user-service
     - Endpoints
         * Post: /api/user
 
 * notification-service - /notification-service
 
-# Instructions
+## Instructions
 1. Clone repo - git clone https://github.com/farajayh/microservice-app.git
 
 2. switch to project directory - cd microservice-app
