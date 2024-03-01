@@ -19,13 +19,3 @@ use Illuminate\Support\Facades\Log;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-
-Route::post('/notifications', function (Request $request) {
-    //Log::info("New User Data: ".json_encode($request->all()));
-    Log::channel('user-notification')->info("New User Data: ".json_encode($request->all()));
-    return response()->json([
-        'status' => true,
-        'message' => 'success',
-    ], 200);
-});
