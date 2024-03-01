@@ -28,8 +28,8 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
     && chown -R www-data:www-data /var/www/html \
     && su www-data -s /bin/sh -c 'composer install --no-scripts --no-autoloader' \
     && composer dump-autoload \
-    && chown -R root:root /var/www/html
-    && php artisan key:generate \
+    && chown -R root:root /var/www/html \
+    && php artisan key:generate
 
 #RUN composer dump-autoload
 
