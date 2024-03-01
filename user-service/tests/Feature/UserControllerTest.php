@@ -25,7 +25,7 @@ class UserControllerTest extends TestCase
      *
      * @return void
      */
-    public function testUserCreationSuccess()
+    public function test_can_create_user()
     {
         $userData = [
             'email' => 'test@example.com',

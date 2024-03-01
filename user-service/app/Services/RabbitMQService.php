@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use Error;
+use Exception;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Connection\AMQPSSLConnection;
 use PhpAmqpLib\Message\AMQPMessage;
@@ -13,16 +15,26 @@ class RabbitMQService
     private $connection;
     private $channel;
 
+    public $connected = false;
+
 
     public function __construct()
     {
-        $this->connection = new AMQPStreamConnection(env('RMQ_HOST'), env('RMQ_PORT'), env('RMQ_USER'), env('RMQ_PASS'), env('RMQ_VHOST'));
-        $this->channel = $this->connection->channel();
+        try{
+            $this->connection = new AMQPStreamConnection(env('RMQ_HOST'), env('RMQ_PORT'), env('RMQ_USER'), env('RMQ_PASS'), env('RMQ_VHOST'));
+            $this->channel = $this->connection->channel();
+
+            $this->connected = true;
+        }catch(Exception $e){
+            Log::error($e->getMessage());
+        }
     }
 
 
     public function publish($message)
     {
+        if(!$this->connected) return false;
+
         $this->channel->exchange_declare('microserv-app', 'direct', false, false, false);
         $this->channel->queue_declare('user-notifications', false, false, false, false);
         $this->channel->queue_bind('user-notifications', 'microserv-app', 'test_key');
@@ -35,6 +47,8 @@ class RabbitMQService
 
     public function consume()
     {
+        if(!$this->connected) return false;
+
         $callback = function ($msg) {
             echo "New Notification Received.\n";
             Log::channel('user-notification')->info("New User Data: $msg->body");
