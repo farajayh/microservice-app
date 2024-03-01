@@ -20,4 +20,4 @@ Demo Laravel Microservice App
     
 4. Do the aboe for /user-service/.env.example file
 
-5. In the project root directory run docker compose up
+5. In the project root directory run -  docker compose up
